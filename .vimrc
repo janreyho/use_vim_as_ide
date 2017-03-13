@@ -87,7 +87,7 @@ Plugin 'davidhalter/jedi-vim'
 " Plugin 'derekwyatt/vim-fswitch'
 " Plugin 'derekwyatt/vim-protodef'
 " Plugin 'dyng/ctrlsf.vim'
-Plugin 'fholgado/minibufexpl.vim'
+"Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'klen/python-mode'
 Plugin 'kshenoy/vim-signature'
@@ -122,8 +122,9 @@ filetype plugin indent on
 
 " 配色方案
 set background=dark
-"colorscheme solarized
-colorscheme molokai
+colorscheme solarized
+let g:solarized_termcolors=256
+"colorscheme molokai
 "colorscheme phd
 
 " >>
