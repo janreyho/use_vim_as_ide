@@ -1,19 +1,3 @@
-开始前，我假设你：0）具备基本的 vim 操作能力，清楚如何打开/编辑/保存文档、命令与插入模式间切换；1）希望将 vim 打造成 C/C++ 语言的 IDE，而非其他语言。
-
-关于 vim 的优点，你在网上能查到 128+ 项，对我而言，只有两项：0）所思即所得，让手输入的速度跟上大脑思考的速度，1）所需即所获，只有你想不到的功能、没有实现不了的插件。希望获得前者的能力，你需要两本教程深入学习，《Practical Vim: Edit Text at the Speed of Thought》和《vim user manual》；要想拥有后者的能力，通读本文 -。-#。对于 vim 的喜爱，献上湿哥哥以表景仰之情：
-
-vi 之大道如我心之禅，
-vi 之漫路即为禅修，
-vi 之命令禅印于心，
-未得此道者视之怪诞，
-与之为伴者洞其真谛，
-长修此道者巨变人生。
-
-作：reddy@lion.austin.com
-译：yangyangwithgnu@yeah.net
-
-言归正传，说说 vim 用于代码编写提供了哪些直接和间接功能支撑。vim 用户手册中，50％ 的例子都是在讲 vim 如何高效编写代码，由此可见，vim 是一款面向于程序员的编辑器，即使某些功能 vim 无法直接完成，借助其丰富的插件资源，必定可以达成目标，这就是所需即所获。
-
 我是个目标驱动的信奉者，本文内容，我会先给出优秀 C/C++ IDE 应具备哪些功能，再去探索如何通过 vim 的操作或插件来达到目标。最终至少要像这个样子：
 
 [![img](https://github.com/yangyangwithgnu/use_vim_as_ide/raw/master/pics/%E5%9B%BE%E5%BD%A2%E7%8E%AF%E5%A2%83%E4%B8%8B%20IDE%20%E6%80%BB%E6%8F%BD.png)](https://github.com/yangyangwithgnu/use_vim_as_ide/blob/master/pics/%E5%9B%BE%E5%BD%A2%E7%8E%AF%E5%A2%83%E4%B8%8B%20IDE%20%E6%80%BB%E6%8F%BD.png)
@@ -23,8 +7,6 @@ vi 之命令禅印于心，
 （纯字符模式下 IDE 总揽）
 
 ## 0 vim 必知会
-
-在正式开始前先介绍几个 vim 的必知会，这不是关于如何使用而是如何配置 vim 的要点，这对理解后续相关配置非常有帮助。
 
 ### 0.1 .vimrc 文件
 
@@ -420,12 +402,7 @@ syntax on
 
 https://github.com/octol/vim-cpp-enhanced-highlight
 
- ）进行增强。效果如下：
-
-[![img](https://github.com/yangyangwithgnu/use_vim_as_ide/raw/master/pics/%E5%A2%9E%E5%BC%BA%20C%2B%2B11%20%E5%8F%8A%20STL%20%E7%9A%84%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE.png)](https://github.com/yangyangwithgnu/use_vim_as_ide/blob/master/pics/%E5%A2%9E%E5%BC%BA%20C%2B%2B11%20%E5%8F%8A%20STL%20%E7%9A%84%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE.png)
-（增强 C++11 及 STL 的语法高亮）
-
-vim-cpp-enhanced-highlight 主要通过 .vim/bundle/vim-cpp-enhanced-highlight/after/syntax/cpp.vim 控制高亮关键字及规则，所以，当你发现某个 STL 容器类型未高亮，那么将该类型追加进 cpp.vim 即可。如，initializer_list 默认并不会高亮，需要添加
+ ）进行增强。
 
 ```
 syntax keyword cppSTLtype initializer_list

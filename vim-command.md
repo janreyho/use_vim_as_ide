@@ -1,4 +1,10 @@
+````bash
+#编辑远程文件
+vim scp://api2dev//etc/nginx/nginx.conf
+````
+
 ##窗口管理
+
 	ctrl+f,ctrl+b		//下一页，上一页
 	:sp					//split		
 	:vsp				//vsplit
