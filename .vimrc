@@ -87,7 +87,7 @@ Plugin 'davidhalter/jedi-vim'
 " Plugin 'derekwyatt/vim-fswitch'
 " Plugin 'derekwyatt/vim-protodef'
 " Plugin 'dyng/ctrlsf.vim'
-"Plugin 'fholgado/minibufexpl.vim'
+" Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
 Plugin 'klen/python-mode'
 Plugin 'kshenoy/vim-signature'
@@ -102,7 +102,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'suan/vim-instant-markdown'
+"Plugin 'suan/vim-instant-markdown'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'
@@ -123,7 +123,8 @@ filetype plugin indent on
 " 配色方案
 set background=dark
 colorscheme solarized
-let g:solarized_termcolors=256
+" let g:solarized_termcolors=256
+let g:solarized_termtrans = 1
 "colorscheme molokai
 "colorscheme phd
 
@@ -482,11 +483,11 @@ let NERDTreeAutoDeleteBuffer=1
 " 多文档编辑
  
 " 显示/隐藏 MiniBufExplorer 窗口
-map <Leader>bl :MBEToggle<cr>
+" map <Leader>bl :MBEToggle<cr>
 
 " buffer 切换快捷键
-map <C-Tab> :MBEbn<cr>
-map <C-S-Tab> :MBEbp<cr>
+" map <C-Tab> :MBEbn<cr>
+" map <C-S-Tab> :MBEbp<cr>
 
 " <<
 
@@ -495,25 +496,25 @@ map <C-S-Tab> :MBEbp<cr>
 " 环境恢复
 
 " 设置环境保存项
-set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
+"set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
 
 " 保存 undo 历史。必须先行创建 .undo_history/
-set undodir=~/.undo_history/
-set undofile
+"set undodir=~/.undo_history/
+"set undofile
 
 " 保存快捷键
 "map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
-map <leader>ss :mksession! my.vim<cr>
+"map <leader>ss :mksession! my.vim<cr>
 
 " 恢复快捷键
 "map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
-map <leader>rs :source my.vim<cr>
+"map <leader>rs :source my.vim<cr>
 
 " <<
  
 " 设置快捷键实现一键编译及运行
-nmap <Leader>m :wa<CR> :cd build/<CR> :!rm -rf main<CR> :!cmake CMakeLists.txt<CR>:make<CR><CR> :cw<CR> :cd ..<CR>
-nmap <Leader>g :wa<CR>:cd build/<CR>:!rm -rf main<CR>:!cmake CMakeLists.txt<CR>:make<CR><CR>:cw<CR>:cd ..<CR>:!build/main<CR>
+" nmap <Leader>m :wa<CR> :cd build/<CR> :!rm -rf main<CR> :!cmake CMakeLists.txt<CR>:make<CR><CR> :cw<CR> :cd ..<CR>
+" nmap <Leader>g :wa<CR>:cd build/<CR>:!rm -rf main<CR>:!cmake CMakeLists.txt<CR>:make<CR><CR>:cw<CR>:cd ..<CR>:!build/main<CR>
 
 " >>
 " 快速选中结对符内的文本
@@ -528,5 +529,5 @@ let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
 " <<
 
 " 调用 gundo 树
-nnoremap <Leader>ud :GundoToggle<CR>
+" nnoremap <Leader>ud :GundoToggle<CR>
 
