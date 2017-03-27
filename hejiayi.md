@@ -151,7 +151,9 @@ let g:Powerline_colorscheme='solarized256'
 
 ## 代码分析
 
-### 语法高亮 
+### 代码展示
+
+#### 语法高亮
 
 vim-cpp-enhanced-highlight
 
@@ -162,7 +164,7 @@ syntax enable
 syntax on
 ```
 
-### 代码缩进 IndentGuides
+#### 代码缩进 IndentGuides
 
 ```bash
 " 随 vim 自启动
@@ -175,7 +177,7 @@ let g:indent_guides_guide_size=1
 :nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 ```
 
-### **代码折叠**za zM zR
+#### 代码折叠za zM zR
 
 vim 自身支持多种折叠：手动建立折叠（manual）、基于缩进进行折叠（indent）、基于语法进行折叠（syntax）、未更改文本构成折叠（diff）等等，其中，indent、syntax 比较适合编程，按需选用
 
@@ -189,35 +191,65 @@ set nofoldenable
 
 ### .h与.cpp快速切换 vim-fswitch
 
-### 代码收藏 vim-signature
+### @代码收藏 vim-signature
 
-### 标识符列表 
+### @标识符列表 
 
-### 声明/定义跳转 
+### @查找替换
 
-### 内容查找
+#### 声明/定义跳转
+
+#### 内容查找
 
 ack.vim（[https://github.com/mileszs/ack.vim](https://github.com/mileszs/ack.vim) ）
 
 ctrlsf.vim（[https://github.com/dyng/ctrlsf.vim](https://github.com/dyng/ctrlsf.vim) ）
 
-### 内容替换
+#### 内容替换
 
 vim-multiple-cursors 插件（[https://github.com/terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) ）
 
-### 多文档编辑
+## 代码开发
 
-MiniBufExplorer（[https://github.com/fholgado/minibufexpl.vim](https://github.com/fholgado/minibufexpl.vim) 
+### 快速开关注释
 
-````bash
-"下一个
-:MBEbn 
-"前一个
-:MBEbp
+Commenter（[https://github.com/scrooloose/nerdcommenter](https://github.com/scrooloose/nerdcommenter) 
 
 ````
+<leader>cc，注释
+<leader>cu，取消注释
+````
 
+### @模版补全
 
+### @接口生成框架
+
+### @信息库参考
+
+## 工程管理
+
+#### 工程文件nerdtree
+
+#### 多文档 MiniBufExplorer
+
+#### 环境恢复
+
+#### @cmake
+
+## 其他辅助
+
+#### 结对符wildfire.vim
+
+    一次空格	选中最近一层结对符内的文本，
+    两次		  则选中近两层内的文本
+    三次		  选中三层，依此类推
+    %	在结对间跳转，vim自带
+#### 快速移动vim-easymotion
+
+    ;;fa  查找所有a字符
+    v<leader><leader>fa		快速选中光标当前位置到指定字符 a 之间的文本，d<leader><leader>fa		快速删除光标当前位置到指定字符 a 之间的文本
+
+#### 分支undo gundo.vim
 
 # 其他
 
@@ -262,7 +294,8 @@ Ctrl + T 返回
 {   转到上一个空行
 }   转到下一个空行
 gd 转到当前光标所指的局部变量的定义，
-gf打开头文件
+CTRL-w gf  在新tab打开头文件
+CTRL-6	上一次编辑的文件
 Ctrl+i 前进 Ctrl+o 返回
 ctrl+z将vi转入后台，fg可返回vi
 
@@ -274,6 +307,8 @@ Ctrl+O	向后回退你的光标移动
 Ctrl+I	向前追赶你的光标移动
 w 	到下一个单词的开头。
 e 	到下一个单词的结尾
+ve 选中当前单词
+ve"*y 当前单词拷贝到系统剪贴板
 H M L	到当前页high，middle，lower
 NG 	到第 N 行 （陈皓注：注意命令中的G是大写的，另我一般使用 : N 到第N行，如 :137 到第137行）
 gg 	到第一行。（陈皓注：相当于1G，或 :1）
@@ -281,7 +316,7 @@ G 	到最后一行
 
 
 N<command> 	重复某个命令N次
-:e <path/to/file> 打开一个文件
+:e <path/to/file> 打开edit一个文件
 :sp <filename>  分屏打开文件
 :tabnew <filename>  分tab打开文件
 u → undo
@@ -292,10 +327,10 @@ J	join line
 :r!date 插入日期（读取Shell命令相关）
 :%!xxd	二进制查看
 :%!xxd -r	恢复
-
 ````
 
-:w !sudo tee %
+> :w !sudo tee %
+
 命令:w !{cmd}，让 vim 执行一个外部命令{cmd}，然后把当前缓冲区的内容从 stdin 传入。
 tee 是一个把 stdin 保存到文件的小工具。
 而 %，是vim当中一个只读寄存器的名字，总保存着当前编辑文件的文件路径。
@@ -351,6 +386,42 @@ gT  	到前一个页
 :bufdo tab split		把buffer中的文件全转成tab的话
 ````
 
+### 查找
+
+````
+:vimgrep word *		在当前目录下查找:
+:vimgrep word **	递归查找子文件夹:
+:cnext (:cn) 		当前页下一个结果
+:cprevious (:cp) 	当前页上一个结果
+:clist (:cl) 		打开quickfix窗口，列出所有结果，不能直接用鼠标点击打开，只能看
+:copen (:cope) 		打开quickfix窗口，列出所有结果，可以直接用鼠标点击打开
+:ccl[ose] 		关闭 quickfix 窗口。
+ctrl + ww 		切换编辑窗口和quickfix窗口，在quickfix里面和编辑窗口一样jk表示上下移动，回车选中进入编辑窗口
+````
+
+### 列块编辑
+
+````
+V	按行为单位进行选择
+v	移动光标可以选择
+
+ctrl-v 进入纵向编辑模式
+r 修改
+I 插入
+A 后添加
+````
+
+
+
+### vim command line
+
+````
+<c-b>	光标移到最左侧
+<c-e>	光标移到最右侧
+````
+
+
+
 ## 每日一Vim
 
 ### 23宏---Record、Play
@@ -368,7 +439,7 @@ print c
 3. 再次输入`q`，表示录制结束
 4. 录制结束后我们就可以play了，输入`@m`就会执行宏中的操作，`m`是第一步中使用的宏的名称，`5@m`表示重复执行5次。这样，所有行都给加上分号了，真是好使。
 
-例2：	实现如下效果：从1到100，每行+1。
+   例2：实现如下效果：从1到100，每行+1。
 
 命令：首先在第一行插入1，然后光标定位了“1”处，进入normal模式，开始录制：`qmyypaq`，（解释：`yyp`：拷贝一行再粘贴在新的一行，`a`：数字+1）后然执行`98@m`，收工。
 
@@ -378,6 +449,5 @@ print c
 <Ctrl>a		+1
 <Ctrl>x		-1
 ````
-
 
 

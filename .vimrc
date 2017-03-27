@@ -64,37 +64,40 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'davidhalter/jedi-vim'
-" Plugin 'derekwyatt/vim-fswitch'
-" Plugin 'derekwyatt/vim-protodef'
-" Plugin 'dyng/ctrlsf.vim'
-" Plugin 'fholgado/minibufexpl.vim'
-Plugin 'gcmt/wildfire.vim'
-Plugin 'klen/python-mode'
-Plugin 'kshenoy/vim-signature'
-" Plugin 'lilydjwg/fcitx.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'Lokaltog/vim-powerline'
-Plugin 'majutsushi/tagbar'
-Plugin 'mileszs/ack.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'sjl/gundo.vim'
-Plugin 'SirVer/ultisnips'
+" Plugin 'altercation/vim-colors-solarized'
+Plugin 'davidhalter/jedi-vim'               "Awesome autocompletion and static analysis library for python
+" Plugin 'fholgado/minibufexpl.vim'         "buffer explorer
+Plugin 'gcmt/wildfire.vim'                  "结对选择 空格
+Plugin 'klen/python-mode'                   "PyLint, Rope, Pydoc, breakpoints from box
+Plugin 'kshenoy/vim-signature'              "收藏display and navigate marks
+" Plugin 'lilydjwg/fcitx.vim'               "中文切换keep and restore fcitx state when leaving/re-entering insert mode
+Plugin 'Lokaltog/vim-easymotion'            "Vim motions on speed  <leader><leader>fa
+Plugin 'Lokaltog/vim-powerline'             "The ultimate vim statusline utility
+Plugin 'majutsushi/tagbar'                  "that displays tags in a window, ordered by scope
+Plugin 'nathanaelkane/vim-indent-guides'    "缩进
+Plugin 'scrooloose/nerdcommenter'           "注释<leader>cc
+Plugin 'scrooloose/nerdtree'                "A tree explorer
+Plugin 'sjl/gundo.vim'                      "分支undo
+Plugin 'SirVer/ultisnips'                   "模板补全
 "Plugin 'suan/vim-instant-markdown'
-Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomasr/molokai'
-Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'                 "Git
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'vim-scripts/indexer.tar.gz'
+
+" Plugin 'vim-scripts/indexer.tar.gz'       "自动生产标签indexing all files in project with ctags
 " Plugin 'vim-scripts/DfrankUtil'
-" Plugin 'vim-scripts/DrawIt'
 " Plugin 'vim-scripts/vimprj'
+" Plugin 'vim-scripts/DrawIt'               "方向键快速绘制出
 " Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-" Plugin 'vim-scripts/phd'
+" Plugin 'vim-scripts/phd'                  "复古主题
+
+" Plugin 'derekwyatt/vim-fswitch'
+" Plugin 'derekwyatt/vim-protodef'          "根据类声明自动生成类实现的代码框架
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'mileszs/ack.vim'                    "Vim plugin for the Perl module / CLI script 'ack'
+" Plugin 'dyng/ctrlsf.vim'                  "结合ack.vim 查找替换
+Plugin 'terryma/vim-multiple-cursors'       "光标编辑功能
+
 Plugin 'VundleVim/Vundle.vim'
 " 插件列表结束
 call vundle#end()
@@ -103,10 +106,12 @@ filetype plugin indent on
 
 "33 界面美化 配色方案
 set background=dark
-colorscheme solarized
+" colorscheme solarized
 " let g:solarized_termcolors=256
-let g:solarized_termtrans = 1
-"colorscheme molokai
+" let g:solarized_termtrans = 1
+colorscheme molokai
+let g:molokai_original = 1
+let g:rehash256 = 1
 "colorscheme phd
 
 " 禁止光标闪烁
