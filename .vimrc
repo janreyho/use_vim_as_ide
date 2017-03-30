@@ -95,6 +95,7 @@ Plugin 'vim-syntastic/syntastic'            "Syntax checking hacks for vim
 " Plugin 'derekwyatt/vim-fswitch'
 " Plugin 'derekwyatt/vim-protodef'          "根据类声明自动生成类实现的代码框架
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'rking/ag.vim'       "Ag(The Silver Searcher)和Ack都是CLI的全局搜索工具，其中Ag更快一些，而Ack也比Vim自带的grep快很多
 Plugin 'mileszs/ack.vim'                    "Vim plugin for the Perl module / CLI script 'ack'
 Plugin 'dyng/ctrlsf.vim'                  "结合ack.vim 查找替换
 Plugin 'terryma/vim-multiple-cursors'       "光标编辑功能
@@ -375,12 +376,12 @@ let g:disable_protodef_sorting=1
 " 启用:Man命令查看各类man信息
 source $VIMRUNTIME/ftplugin/man.vim
 " 定义:Man命令查看各类man信息的快捷键
-nmap <Leader>man :Man 3 <cword><CR>
+" nmap <Leader>man :Man 3 <cword><CR>
 
 
 " 66工程文件浏览
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap <Leader>fl :NERDTreeToggle<CR>
+" nmap <Leader>fl :NERDTreeToggle<CR>
 " 设置 NERDTree 子窗口宽度
 let NERDTreeWinSize=22
 " 设置 NERDTree 子窗口位置
@@ -406,11 +407,11 @@ let NERDTreeAutoDeleteBuffer=1
 "set undodir=~/.undo_history/
 "set undofile
 " 保存快捷键
-"map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
-"map <leader>ss :mksession! my.vim<cr>
+" map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
+" map <leader>ss :mksession! my.vim<cr>
 " 恢复快捷键
-"map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
-"map <leader>rs :source my.vim<cr>
+" map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
+" map <leader>rs :source my.vim<cr>
 " 设置快捷键实现一键编译及运行
 " nmap <Leader>m :wa<CR> :cd build/<CR> :!rm -rf main<CR> :!cmake CMakeLists.txt<CR>:make<CR><CR> :cw<CR> :cd ..<CR>
 " nmap <Leader>g :wa<CR>:cd build/<CR>:!rm -rf main<CR>:!cmake CMakeLists.txt<CR>:make<CR><CR>:cw<CR>:cd ..<CR>:!build/main<CR>
