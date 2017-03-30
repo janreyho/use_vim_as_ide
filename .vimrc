@@ -83,6 +83,7 @@ Plugin 'SirVer/ultisnips'                   "模板补全
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'                 "Git
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-syntastic/syntastic'            "Syntax checking hacks for vim
 
 " Plugin 'vim-scripts/indexer.tar.gz'       "自动生产标签indexing all files in project with ctags
 " Plugin 'vim-scripts/DfrankUtil'
@@ -95,7 +96,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'derekwyatt/vim-protodef'          "根据类声明自动生成类实现的代码框架
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'mileszs/ack.vim'                    "Vim plugin for the Perl module / CLI script 'ack'
-" Plugin 'dyng/ctrlsf.vim'                  "结合ack.vim 查找替换
+Plugin 'dyng/ctrlsf.vim'                  "结合ack.vim 查找替换
 Plugin 'terryma/vim-multiple-cursors'       "光标编辑功能
 
 Plugin 'VundleVim/Vundle.vim'
@@ -130,7 +131,7 @@ fun! ToggleFullscreen()
 	call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
 endf
 " 全屏开/关快捷键
-map <silent> <F11> :call ToggleFullscreen()<CR>
+" map <silent> <F11> :call ToggleFullscreen()<CR>
 "" 启动 vim 时自动全屏
 "autocmd VimEnter * call ToggleFullscreen()
 
@@ -182,7 +183,7 @@ let g:indent_guides_start_level=2
 " 色块宽度
 let g:indent_guides_guide_size=1
 " 快捷键 i 开/关缩进可视化
-nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+" nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " 代码折叠
 " 基于缩进或语法进行代码折叠
@@ -193,7 +194,7 @@ set nofoldenable
 
 " 接口与实现快速切换
 " *.cpp 和 *.h 间切换
-nmap <silent> <Leader>sw :FSHere<cr>
+" nmap <silent> <Leader>sw :FSHere<cr>
 
 " 代码收藏
 " 自定义 vim-signature 快捷键
@@ -225,7 +226,7 @@ let g:SignatureMap = {
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边
 let tagbar_left=1
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
-nnoremap <Leader>ilt :TagbarToggle<CR>
+" nnoremap <Leader>ilt :TagbarToggle<CR>
 " 设置标签子窗口的宽度
 let tagbar_width=32
 " tagbar 子窗口中不显示冗余帮助信息
@@ -270,16 +271,27 @@ let g:tagbar_type_cpp = {
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v
 " 默认 --fields=+iaS 不满足 YCM 要求，需改为 --fields=+iaSl
-let g:indexer_ctagsCommandLineOptions="--c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v --fields=+iaSl --extra=+q"
+" let g:indexer_ctagsCommandLineOptions="--c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v --fields=+iaSl --extra=+q"
 " 正向遍历同名标签
-nmap <Leader>tn :tnext<CR>
+" nmap <Leader>tn :tnext<CR>
 " 反向遍历同名标签
-nmap <Leader>tp :tprevious<CR>
+" nmap <Leader>tp :tprevious<CR>
 
 " 基于语义的代码导航
 nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
 " 只能是 #include 或已打开的文件
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+
+" syntastic 错误符号
+let g:syntastic_error_symbol='✗'
+" 警告符号
+let g:syntastic_warning_symbol='⚠'
+" 是否在打开文件时检查
+let g:syntastic_check_on_open=0
+" 是否在保存文件后检查
+let g:syntastic_check_on_wq=1
 
 " 查找
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
@@ -372,7 +384,7 @@ nmap <Leader>fl :NERDTreeToggle<CR>
 " 设置 NERDTree 子窗口宽度
 let NERDTreeWinSize=22
 " 设置 NERDTree 子窗口位置
-let NERDTreeWinPos="right"
+let NERDTreeWinPos="left"
 " 显示隐藏文件
 let NERDTreeShowHidden=1
 " NERDTree 子窗口中不显示冗余帮助信息

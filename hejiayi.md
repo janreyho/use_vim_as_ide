@@ -253,6 +253,54 @@ Commenter（[https://github.com/scrooloose/nerdcommenter](https://github.com/scr
 
 # 其他
 
+### vim命令
+
+#### set命令
+
+这个命令通常用来设置一个vim选项，如`set number`可以开启行号显示。`set list`可以显示一些不可见字符。`set tabstop=4`可以设置将一个缩进符号显示为4个字符宽。有些选项通常需要同时设置，这时可以用一个set命令搞定，如`set noexpandtab nosmarttab tabstop=4 shiftwidth=4 softtabstop=4`，这可以同时设置一系列关于缩进的选项。
+
+set命令也可以用来显示选项的值，这在诊断问题的时候非常有用，如`set list?`，`set autoindent?`，`set tabstop?`（也可以写成`set tabstop`）。
+
+#### let命令
+
+let命令用来给变量赋值。你在别人的vim配置里会经常看到let命令出现，因为很多vim插件通过读取某个全局变量的值来设定它的行为模式，包括插件的开启和关闭，这是保证在公共环境下安装vim插件而不影响其他人的好方法，因为只要其他人的vimrc配置里没有定义关于该插件的全局变量，插件就可以选择什么都不做。
+
+关于let命令的具体语法，你可以`:h let`。
+
+#### map命令
+
+map命令用来定义按键映射，按键映射简单但强大，可以帮助你减少相当多的重复工作。这几乎是学习vim的初期最具学习性价比的一个命令。
+
+我在这里提到的map命令，其实是一组类似的命令，包括`map`, `noremap`, `imap`, `inoremap`, `nmap`, `nnoremap`... 这些命令都用来定义按键映射，只是作用稍有区别。他们的语法都类似：
+
+`map {lhs} {rhs}`
+
+表示将`{lhs}`按键序列映射到`{rhs}`按键序列
+
+这些命令可以分为两类：不允许递归定义的`*noremap`类和允许递归定义的`*map`类，两类命令的区别就在于，`*noremap`类按键映射中的{rhs}被解释为默认按键的序列，而`*map`类按键映射中的{rhs}则被解释为原始的用户按键序列，因而会受到其它按键映射的影响。
+
+显然`*map`类的映射命令的涵义并不明确，它很可能会受到其它脚本及vim插件的干扰，对于新手来说并不友好。事实上，通常我们很少需要用到`*map`类映射命令，除非你有意要保留某些副作用。所以，如果你对map命令不是十分熟悉，请**从\*noremap类命令开始**。
+
+常用的几个`*noremap`类命令有：
+
+- `nnoremap` 定义normal模式(普通模式)下的键映射，如`nnoremap j gjzz`
+- `inoremap` 定义insert模式(插入模式)下的键映射, 如`inoremap  g`
+- `vnoremap` 定义visual模式(可视模式)下的键映射, 如`vnoremap v `
+
+更多的map命令可以参考[这里](http://man.lupaworld.com/content/manage/vi/doc/map.html)
+
+#### 关于那些不能映射的键
+
+在Linux系统终端中，很多键具有特殊的含义，是不应该在vim里再定义映射的：
+
+<c-c> 向当前进程发送一个终止信号。很多人习惯在windows系统里用这个快捷键复制文本，但是不要把这个习惯带入vim中
+<c-z> 向当前进程发送一个挂起信号，当前进程将被挂起到后台。
+<c-d> 相当于输入了一个EOF(文件结束符)，很多命令行程序通过这个符号判断输入结束。
+<c-[> 相当于输入<esc>。这是某些情况下输入<esc>的唯一方式。
+<c-h> 相当于输入<backspace>，这是某些情况下输入<backspace>的唯一方式。
+
+即使你大部分时间并没有在使用终端，你也不应该映射这些键，否则你的配置说不定哪天就会出一些奇怪的问题。当你在写一个准备发布给别人用的插件时尤其需要注意这点！
+
 ### vim寄存器
 
 *先抛出一个问题：每次打开Vim，想找一段文本来练练手，于是打开网页copy了一段，问题来了，怎样粘贴到vim的编辑器里头去呢？如果你还在CTRL+v的话，说明你还无法割舍Windows，就像东方姑娘忘不了令狐冲):这里暂且告诉你如何粘贴：SHIFT+INSERT 两个键联合起来。再来看下面的原理* 
@@ -278,6 +326,39 @@ Commenter（[https://github.com/scrooloose/nerdcommenter](https://github.com/scr
 
 当然还有一些寄存器，这里就不一一介绍了。
 
+### 跳转
+
+```
+Ctrl + ] 到函数定义或声明 [ + tab
+Ctrl + T 返回
+[{ 转到上一个位于第一列的"{"
+}] 转到下一个位于第一列的"{"
+{   转到上一个空行
+}   转到下一个空行
+gd 转到当前光标所指的局部变量的定义，
+CTRL-w gf  在新tab打开头文件
+:checkpath	检查头文件目录
+:set path+=base/ 设置头文件目录
+CTRL-6	上一次编辑的文件
+Ctrl+i 前进 Ctrl+o 返回
+
+
+H M L	到当前页high，middle，lower
+NG 	到第 N 行 （陈皓注：注意命令中的G是大写的，另我一般使用 : N 到第N行，如 :137 到第137行）
+gg 	到第一行。（陈皓注：相当于1G，或 :1）
+G 	到最后一行
+
+% 	匹配括号移动
+*   转到当前光标所指的单词下一次出现的地方
+#   转到当前光标所指的单词上一次出现的地方
+Ctrl+O	向后回退你的光标移动
+Ctrl+I	向前追赶你的光标移动
+w 	到下一个单词的开头。
+e 	到下一个单词的结尾
+```
+
+
+
 ### 目录相关
 
 ````
@@ -287,38 +368,10 @@ $ vi –t tag (请把tag替换为您欲查找的变量或函数名)
 ：tp (tp 助记字：tags preview)—此命令不常用，可以不用记
 ：tn (tn 助记字：tags next) —此命令不常用，可以不用记
 ：tag /tag(请把tag替换为您欲查找的变量或函数名)
-Ctrl + ] 到函数定义或声明 [ + tab
-Ctrl + T 返回
-[{ 转到上一个位于第一列的"{"
-}] 转到下一个位于第一列的"{"
-{   转到上一个空行
-}   转到下一个空行
-gd 转到当前光标所指的局部变量的定义，
-CTRL-w gf  在新tab打开头文件
-CTRL-6	上一次编辑的文件
-Ctrl+i 前进 Ctrl+o 返回
+
 ctrl+z将vi转入后台，fg可返回vi
 
-
-% 	匹配括号移动
-*   转到当前光标所指的单词下一次出现的地方
-#   转到当前光标所指的单词上一次出现的地方
-Ctrl+O	向后回退你的光标移动
-Ctrl+I	向前追赶你的光标移动
-w 	到下一个单词的开头。
-e 	到下一个单词的结尾
-ve 选中当前单词
-ve"*y 当前单词拷贝到系统剪贴板
-H M L	到当前页high，middle，lower
-NG 	到第 N 行 （陈皓注：注意命令中的G是大写的，另我一般使用 : N 到第N行，如 :137 到第137行）
-gg 	到第一行。（陈皓注：相当于1G，或 :1）
-G 	到最后一行
-
-
 N<command> 	重复某个命令N次
-:e <path/to/file> 打开edit一个文件
-:sp <filename>  分屏打开文件
-:tabnew <filename>  分tab打开文件
 u → undo
 <C-r> → redo
 
@@ -328,6 +381,8 @@ J	join line
 :%!xxd	二进制查看
 :%!xxd -r	恢复
 ````
+
+
 
 > :w !sudo tee %
 
@@ -351,6 +406,15 @@ h （隐藏的缓冲区）
 :b n 打开第n个缓冲区
 :bn 下一个缓冲区
 :bp 上一个缓冲区
+
+:e <path/to/file> 打开edit一个文件
+:sp <filename>  分屏打开文件
+:tabnew <filename>  分tab打开文件
+
+:sb 3 				分屏显示3号buffer
+:vertical sb 3      同上，垂直分屏
+:b <Tab>	显示所有Buffer中的文件
+:b *car<Tab>   " 显示 car.c jetcar.c car.h jetcar.h
 ````
 
 #### 窗口分屏浏览目录
@@ -402,13 +466,16 @@ ctrl + ww 		切换编辑窗口和quickfix窗口，在quickfix里面和编辑窗�
 ### 列块编辑
 
 ````
-V	按行为单位进行选择
-v	移动光标可以选择
+V（大写）	按行为单位进行选择
+v（小写）	移动光标可以选择
 
 ctrl-v 进入纵向编辑模式
 r 修改
 I 插入
 A 后添加
+
+ve 选中当前单词
+ve"*y 当前单词拷贝到系统剪贴板
 ````
 
 
