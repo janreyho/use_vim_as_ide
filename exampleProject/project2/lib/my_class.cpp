@@ -1,3 +1,5 @@
+#include <iostream>
+using namespace std;
 #include "my_class.h"
 // 重载函数
 static void
