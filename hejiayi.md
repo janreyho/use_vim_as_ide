@@ -71,9 +71,9 @@ vim 有一套自己的脚本语言 vimscript，vim 还支持 perl、python、lua
 
 vim 插件目前分为 *.vim 和 *.vba 两类，前者是传统格式的插件，实际上就是一个文本文件，通常 someplugin.vim（插件脚本）与 someplugin.txt（插件帮助文件）并存在一个打包文件中，但**帮助文件需执行 :helptags ~/.vim/doc/ 才能生效，可通过 :h someplugin 查看插件帮助信息**。
 
-## 源码安装 vim
+## 1 源码安装 vim
 
-## 插件管理
+## 2 插件管理
 
 插件更新频率较高，差不多每隔一个月你应该看看哪些插件有推出新版本
 
@@ -83,7 +83,7 @@ vim 插件目前分为 *.vim 和 *.vba 两类，前者是传统格式的插件�
 :PluginUpdate
 ```
 
-## 界面美化
+## 3  界面美化
 
 ### 主题风格
 
@@ -149,7 +149,7 @@ set nowrap
 let g:Powerline_colorscheme='solarized256'
 ```
 
-## 代码分析
+## 4  代码分析
 
 ### 代码展示
 
@@ -189,19 +189,56 @@ set foldmethod=syntax
 set nofoldenable
 ```
 
-### .h与.cpp快速切换 vim-fswitch
+### .h与.cpp快速切换 
 
-### @代码收藏 vim-signature
+vim-fswitch
+
+### @代码收藏 
+
+vim-signature
 
 ### @标识符列表 
 
+​	本文主题是探讨如何将 vim 打造成高效的 C/C++ 开发环境，希望实现标识符列表、定义跳转、声明提示、实时诊断、代码补全等等系列功能，这些都需要 vim 能够很好地理解我们的代码（不论是 vim 自身还是借助插件甚至第三方工具），如何帮助 vim 理解代码？
+
+​	有两种主流方式：标签系统和语义系统。至于优劣，简单来说，标签系统配置简单，而语义系统效果精准，后者是趋势。目前对于高阶 IDE 功能，部分已经有对应基于语义的插件支撑，而部分仍只能通过基于标签的方式实现，若同个功能既有语义插件又有标签插件，优选语义。
+
+#### 标签系统
+
+ctags
+
+```bash
+ctags --list-languages
+#现在运行 ctags 生成标签文件
+ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extra=+q --language-force=c++
+ctags --list-kinds=c++ 
+```
+
+tagbar （[https://github.com/majutsushi/tagbar](https://github.com/majutsushi/tagbar) ）
+
+#### 语义系统
+
+​	随着 C++11/14 的推出，诸如类型推导、lamda 表达式、模版等等新特性，标签系统显得有心无力，这个星球最了解代码的工具非编译器莫属，如果编译器能在语义这个高度帮助 vim 理解代码，那么我们需要的各项 IDE 功能肯定能达到另一个高度。
+
 ### @查找替换
 
-#### 声明/定义跳转
+#### 根据标签声明/定义跳转
+
+```
+:set tags+=/data/workplace/example/tags
+```
+
+​	周期性针对这个工程自动生成标签文件，并通知 vim 引人该标签文件，嘿，还真有这样的插件 —— indexer（[https://github.com/vim-scripts/indexer.tar.gz](https://github.com/vim-scripts/indexer.tar.gz) ）。indexer 依赖 DfrankUtil（[https://github.com/vim-scripts/DfrankUtil](https://github.com/vim-scripts/DfrankUtil) ）、vimprj（[https://github.com/vim-scripts/vimprj](https://github.com/vim-scripts/vimprj) ）两个插件，请一并安装。
+
+#### 根据语义的声明/定义跳转
+
+有个 vim 插件叫 YCM，有个 C++ 编译器叫 clang，只要正确使用它俩，你将获得无与伦比的代码导航用户体验，以及，代码补全
 
 #### 内容查找
 
 ack.vim（[https://github.com/mileszs/ack.vim](https://github.com/mileszs/ack.vim) ）
+
+ag.vim
 
 ctrlsf.vim（[https://github.com/dyng/ctrlsf.vim](https://github.com/dyng/ctrlsf.vim) ）
 
@@ -209,7 +246,7 @@ ctrlsf.vim（[https://github.com/dyng/ctrlsf.vim](https://github.com/dyng/ctrlsf
 
 vim-multiple-cursors 插件（[https://github.com/terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) ）
 
-## 代码开发
+## 5  代码开发
 
 ### 快速开关注释
 
@@ -222,19 +259,91 @@ Commenter（[https://github.com/scrooloose/nerdcommenter](https://github.com/scr
 
 ### @模版补全
 
+UltiSnips（[https://github.com/SirVer/ultisnips](https://github.com/SirVer/ultisnips) ）
+
+### @智能补全
+
+- 基于标签
+
+基于标签的补全，后端 ctags 先生成标签文件，前端采用插件 new-omni-completion（内置）进行识别。这种方式操作简单、效果不错，一般来说两步搞定。
+
+- 基于语义
+
+clang_complete 能补全编译器根据 C++ 规范自动添加的两个重载操作符、一个默认构造函数、一个析构函数，这就是基于语义分析的智能补全。
+
+YouCompleteMe（后简称 YCM，[https://github.com/Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe) ），一个随键而全的、支持模糊搜索的、高速补全的插件，太棒了！YCM 由 google 公司搜索项目组的软件工程师 Strahinja Val Markovic 所开发，YCM 后端调用 libclang（以获取 AST，当然还有其他语言的语义分析库，我不关注）、前端由 C++ 开发（以提升补全效率）、外层由 python 封装（以成为 vim 插件），它可能是我见过安装最复杂的 vim 插件了。有了 YCM，基本上 clang_complete、AutoComplPop、Supertab、neocomplcache、UltiSnips、 Syntastic 可以再见了。
+
 ### @接口生成框架
+
+vim-protodef（[https://github.com/derekwyatt/vim-protodef](https://github.com/derekwyatt/vim-protodef) ）。vim-protodef 依赖 FSwitch（[https://github.com/derekwyatt/vim-fswitch](https://github.com/derekwyatt/vim-fswitch) ），
 
 ### @信息库参考
 
-## 工程管理
+有过 win32 SDK 开发经验的朋友对 MSDN 或多或少有些迷恋吧，对于多达 7、8 个参数的 API，如果没有一套函数功能描述、参数讲解、返回值说明的文档，那么软件开发将是人间炼狱。
 
-#### 工程文件nerdtree
+```
+" 启用:Man命令查看各类man信息
+source $VIMRUNTIME/ftplugin/man.vim
+" 定义:Man命令查看各类man信息的快捷键
+nmap <Leader>man :Man 3 <cword><CR>
+```
 
-#### 多文档 MiniBufExplorer
+## 6  工程管理
+
+#### 工程文件
+
+nerdtree
+
+#### 多文档
+
+MiniBufExplorer
 
 #### 环境恢复
 
+## 7  工具链集成
+
+### 代码编译
+
+Stanley B. Lippman 先生所推荐宇宙最强 C++ 编译器 —— LLVM/clang
+
+LLVM 出自伊利诺伊大学研究项目，由 google 和苹果公司赞助。LLVM 的存在只为两个目的：一是尽可能地模块化现有代码以方便在此基础上进行二次开发、一是提供比传统构建工具链更好的用户体验。LLVM 是个很大很大的项目群，几乎把从编译到调试的各个构建环节都重新实现了一遍
+
+clang 子项目，clang 把标准 C/C++ 代码转换为中间语言，换言之，前端 clang + 后端 LLVM（后简称 LLVM/clang）就是一款可替代 GCC 的优秀编译器。相较 GCC，LLVM/clang 有众多优势
+
+### 系统构建
+
+linux 有两类工程构建工具 —— Makefile系 和非 Makefile 系，Makefile 系常见构建工具有 GNU 出品的老牌 autoconf、新生代的 CMake，非 Makefile 系中最著名的要数 SCons。KDE 就是通过 CMake构建出来的，易用性灵活性兼备，洒泪推荐。
+
 #### @cmake
+
+CMake全称为“cross platform make”，是一个开源的跨平台自动化构建系统。使用指定名为`CMakeLists.txt`的配置文件可以控制软件的构建、测试和打包等流程。同时，通过编写平台无关的`CMakeLists.txt`文件和需要简单的配置，CMake就能生成对应目标平台的构建文件，例如：类Unix系统的makefile文件、Windows的Visual Studio工程或者Mac的Xcode工程，大大简化了跨平台和交叉编译方面的工作。
+
+当然，类似的make工具也很多，`Autocof`、`JAM`、`QMake`、`SCons`甚至`ANT`，目的都是指定一套规则来简化整个构建编译流程。CMake工具链简单、灵活，且跨平台，很多知名项目都在使用CMake构建。适合以C、C++或者java等编译语言的项目。
+
+一般来说，你需要先写个名为 CMakeLists.txt 的构建脚本，然后执行 cmake CMakeLists.txt 命令将生成 Makefile 文件，最后执行 make 命令即可编译生成可执行程序。
+
+举例来说，你工程包含 main.cpp 文件，要构建它，你需要执行如下步骤。
+
+第一步，编写 CMakeLists.txt，内容如下：
+
+```cmake
+PROJECT(main) 
+SET(SRC_LIST main.cpp) 
+SET(CMAKE_CXX_COMPILER "clang++") 
+SET(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Werror -Weverything -Wno-deprecated-declarations -Wno-disabled-macro-expansion -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-global-constructors -Wno-exit-time-destructors -Wno-missing-prototypes -Wno-padded -Wno-old-style-cast")
+SET(CMAKE_EXE_LINKER_FLAGS "-lc++ -lc++abi") 
+SET(CMAKE_BUILD_TYPE Debug) 
+ADD_EXECUTABLE(main ${SRC_LIST})
+```
+
+其中，PROJECT 指定工程名、SET 是 cmake 变量赋值命令、ADD_EXECUTABLE 指定生成可执行程序的名字。括号内的大写字符串是 cmake 内部预定义变量，这是 CMakeLists.txt 脚本的重点，下面详细讲述：
+
+- SRC_LIST 指定参与编译的源码文件列表，如果有多个文件请用空格隔开，如，你工程有 main.cpp、lib/MyClass.cpp、lib/MyClass.h 三个文件，那么可以指定为：
+- SET(SRC_LIST main.cpp lib/MyClass.cpp)
+- CMAKE_CXX_COMPILER 指定选用何种编译器；
+- CMAKE_CXX_FLAGS 设定编译选项；
+- CMAKE_EXE_LINKER_FLAGS 设定链接选项。一定要将 -lc++ 和 -lc++abi 独立设定到 CMAKE_EXE_LINKER_FLAGS 变量中而不能放在 CMAKE_CXX_FLAGS，否则无法通过链接；
+- CMAKE_BUILD_TYPE 设定生成的可执行程序中是否包含调试信息。
 
 ## 其他辅助
 
@@ -250,6 +359,14 @@ Commenter（[https://github.com/scrooloose/nerdcommenter](https://github.com/scr
     v<leader><leader>fa		快速选中光标当前位置到指定字符 a 之间的文本，d<leader><leader>fa		快速删除光标当前位置到指定字符 a 之间的文本
 
 #### 分支undo gundo.vim
+
+vim-instant-markdown
+
+中英文fcitx.vim
+
+syntastic
+
+ag.vim
 
 # 其他
 
@@ -423,6 +540,9 @@ h （隐藏的缓冲区）
 :He   全称为 :Hexplore  （在下边分屏浏览目录）
 :He!  （在上分屏浏览目录）
 :Ve 全称为 :Vexplore （在左边分屏间浏览目录，要在右边则是 :Ve!）
+
+:vert help youcompleteme 	左侧分割窗口打开help
+:ddp  上下两行换位置
 ````
 
 #### 分屏同步移动

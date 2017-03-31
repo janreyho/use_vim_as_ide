@@ -581,14 +581,13 @@ Exuberant Ctags（[http://ctags.sourceforge.net/](http://ctags.sourceforge.net/)
 
 ```
 ctags --list-languages
-
 ```
 
 学习知识最好方式就是动手实践。我们以 main.cpp、my_class.h、my_class.cpp 三个文件为例：
 
 第一步，准备代码文件。创建演示目录 /data/workplace/example/、库子目录 /data/workplace/example/lib/，创建如下内容的 main.cpp：
 
-```
+```c++
 #include <iostring> 
 #include <string> 
 #include "lib/my_class.h" 
@@ -613,12 +612,11 @@ main (void)
 	cout << g_num << name << endl; 
 	return	(EXIT_SUCCESS); 
 } 
-
 ```
 
 创建如下内容的 my_class.h：
 
-```
+```c++
 #pragma once 
 class MyClass 
 { 
@@ -627,12 +625,11 @@ class MyClass
 	private: 
 		; 
 };
-
 ```
 
 创建如下内容的 my_class.cpp：
 
-```
+```C++
 #include "my_class.h" 
 // 重载函数 
 static void 
@@ -645,7 +642,6 @@ MyClass::printMsg (void)
 { 
 	std::cout << "I'M MyClass!" << std::endl; 
 }
-
 ```
 
 第二步，生成标签文件。现在运行 ctags 生成标签文件：
@@ -653,14 +649,12 @@ MyClass::printMsg (void)
 ```
 cd /data/workplace/example/
 ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extra=+q --language-force=c++
-
 ```
 
 命令行参数较多，主要关注 --c++-kinds，ctags 默认并不会提取所有标签，运行
 
 ```
 ctags --list-kinds=c++ 
-
 ```
 
 可看到 ctags 支持生成标签类型的全量列表：
@@ -809,7 +803,6 @@ long 将作为 short 的简要描述展示在 vim 的 tagbar 子窗口中；fold
 
 ```
 :set tags+=/data/workplace/example/tags
-
 ```
 
 既然 vim 有个专门的命令来引入标签，说明 vim 能识别标签。虽然标签文件中并无行号，但已经有标签所在文件，以及标签所在行的完整内容，vim 只需切换至对应文件，再在文件内作内容查找即可找到对应行。换言之，只要有对应的标签文件，vim 就能根据标签跳转至标签定义处。
@@ -898,7 +891,6 @@ vim 支持正则表达式，那么已经具有强劲的查供能力，在当前�
 
 ```
 ++cnt;
-
 ```
 
 这时，即便 grep.vim 或 ack.vim 在一个有四个选项的列表中为你罗列出相关行，因为完全相同，所以你也无法确定到底应该查看第几项。换言之，除了罗列关键字所在行之外，我还需要看到所在行的上下几行，这样，有了上下文，我就可以最终决定哪一行是我需要的了。ctrlsf.vim（[https://github.com/dyng/ctrlsf.vim](https://github.com/dyng/ctrlsf.vim) ）为此而生。
@@ -914,7 +906,6 @@ zypper --no-refresh in ack
 
 ```
 :CtrlSF
-
 ```
 
 将自动提取光标所在关键字进行查找，你也可以指定 ack 的选项
@@ -1494,7 +1485,6 @@ cd ycm_build
 cmake -G "Unix Makefiles" -DUSE_SYSTEM_BOOST=ON -DPATH_TO_LLVM_ROOT=~/downloads/clang+llvm/ .\
  ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
 cmake --build . --target ycm_core
-
 ```
 
 在 ~/.vim/bundle/YouCompleteMe/third_party/ycmd 中将生成 ycm_client_support.so、ycm_core.so、libclang.so 等三个共享库文件；
@@ -1621,7 +1611,6 @@ let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_cache_omnifunc=0
 " 语法关键字补全			
 let g:ycm_seed_identifiers_with_syntax=1
-
 ```
 
 其中大部分内容从注释就能了解，粗体配置项见下文。
@@ -1776,7 +1765,6 @@ vim 内置的 man.vim 插件可以查看已安装的 man，需在 .vimrc 中配�
 source $VIMRUNTIME/ftplugin/man.vim
 " 定义:Man命令查看各类man信息的快捷键
 nmap <Leader>man :Man 3 <cword><CR>
-
 ```
 
 需要查看时，在 vim 中键入输入 :Man fork 或者 :Man std::vector （注意大小写）即可在新建分割子窗口中查看到函数参考信息，为了方便，我设定了快捷键 <Leader>man，这样，光标所在单词将被传递给 :Man 命令，不用再手工键入，如下图所示：
@@ -2108,7 +2096,7 @@ linux 有两类工程构建工具 —— Makefile系 和非 Makefile 系，Makef
 
 第一步，编写 CMakeLists.txt，内容如下：
 
-```
+```cmake
 PROJECT(main) 
 SET(SRC_LIST main.cpp) 
 SET(CMAKE_CXX_COMPILER "clang++") 
@@ -2116,7 +2104,6 @@ SET(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ -Werror -Weverything -Wno-depreca
 SET(CMAKE_EXE_LINKER_FLAGS "-lc++ -lc++abi") 
 SET(CMAKE_BUILD_TYPE Debug) 
 ADD_EXECUTABLE(main ${SRC_LIST})
-
 ```
 
 其中，PROJECT 指定工程名、SET 是 cmake 变量赋值命令、ADD_EXECUTABLE 指定生成可执行程序的名字。括号内的大写字符串是 cmake 内部预定义变量，这是 CMakeLists.txt 脚本的重点，下面详细讲述：
@@ -2130,7 +2117,7 @@ ADD_EXECUTABLE(main ${SRC_LIST})
 
 另外，对于编译选项，我的原则是严己宽人。也就是说，在我本机上使用最严格的编译选项以发现尽量多 bug，发布给其他人的源码包使用最宽松的编译选项以减少环境差异导致编译失败的可能。前面罗列出来的就是严格版的 CMakeLists.txt，宽松版我会考虑：编译器改用 GCC（很多人没装 clang）、忽略所有编译警告、让编译器进行代码优化、去掉调试信息、添加安装路径等要素，具体如下：
 
-```
+```cmake
 PROJECT(main) 
 SET(SRC_LIST main.cpp) 
 SET(CMAKE_CXX_COMPILER "g++") 
@@ -2138,7 +2125,6 @@ SET(CMAKE_CXX_FLAGS "-std=c++11 -O3")
 SET(CMAKE_BUILD_TYPE Release) 
 ADD_EXECUTABLE(porgram_name ${SRC_LIST})
 INSTALL(PROGRAMS porgram_name DESTINATION /usr/bin/)
-
 ```
 
 第二步，基于 CMakeLists.txt 生成 Makefile。在 CMakeLists.txt 所在目录执行：
@@ -2271,7 +2257,6 @@ map <SPACE> <Plug>(wildfire-fuel)
 vmap <S-SPACE> <Plug>(wildfire-water)
 " 适用于哪些结对符
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
-
 ```
 
 这样，在 vim 的命令模式下，一次空格选中最近一层结对符内的文本，两次则选中近两层内的文本，三次三层，依此类推；或者键入 3space，直接选中三层内的文本；若要取消，键入 shift-space 即可。另外，结对符类型也可以在 wildfire_objects 变量中指定。如下图所示：
