@@ -83,7 +83,7 @@ Plugin 'SirVer/ultisnips'                   "模板补全
 Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'                 "Git
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'            "Syntax checking hacks for vim
+" Plugin 'vim-syntastic/syntastic'            "Syntax checking hacks for vim
 
 " Plugin 'vim-scripts/indexer.tar.gz'       "自动生产标签indexing all files in project with ctags
 " Plugin 'vim-scripts/DfrankUtil'
@@ -283,15 +283,17 @@ nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
 " 只能是 #include 或已打开的文件
 nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
 
 " syntastic 错误符号
-let g:syntastic_error_symbol='✗'
+" let g:syntastic_error_symbol='✗'
 " 警告符号
-let g:syntastic_warning_symbol='⚠'
+" let g:syntastic_warning_symbol='⚠'
 " 是否在打开文件时检查
-let g:syntastic_check_on_open=0
+" let g:syntastic_check_on_open=0
 " 是否在保存文件后检查
-let g:syntastic_check_on_wq=1
+" let g:syntastic_check_on_wq=1
 
 " 查找
 " 使用 ctrlsf.vim 插件在工程内全局查找光标所在关键字，设置快捷键。快捷键速记法：search in project
